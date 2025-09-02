@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import json
 #from oauth2client.service_account import ServiceAccountCredentials
-import gspread
+#import gspread
 from datetime import datetime
 import ssl
 import requests
