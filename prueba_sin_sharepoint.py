@@ -1134,19 +1134,31 @@ def ordenar_datos(texto,datos_extraidos):
     # Fecha del último cambio de situación
     fecha_ultimo_cambio = None
     coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
-    
     for match in coincidencias:
         posible_valor = match.group(1).strip()
         if posible_valor and not any(c in posible_valor for c in [':', '\n']):
             fecha_ultimo_cambio = posible_valor
-            break  # ← ¡Importante! Solo toma el primero válido y rompe el ciclo
+            break
+    
+    # 👇 ADICIONAL: Revisa las claves del dict si no encontró en el texto
+    if not fecha_ultimo_cambio:
+        for clave in datos_extraidos:
+            if "Fecha del último cambio de situación:" in clave:
+                match = re.search(r'Fecha del último cambio de situación[:\s]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', clave)
+                if match:
+                    fecha_ultimo_cambio = match.group(1).strip()
+                    break
+    
+    # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
         try:
             fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
             fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
         except Exception as e:
             print("Error al calcular fecha_ultimo_cambio:", e)
+    
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
+    
 
 
     entidad_federativa = None
