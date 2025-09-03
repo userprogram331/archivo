@@ -1133,15 +1133,12 @@ def ordenar_datos(texto):
 
     # Fecha del último cambio de situación
     fecha_ultimo_cambio = None
-
-    for clave in datos_extraidos.keys():
-        if "Fecha del último cambio de situación" in clave:
-            # Buscar fecha en la clave, formato dd-mm-aaaa o dd/mm/aaaa
-            match = re.search(r'Fecha del último cambio de situación[:\s]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', clave)
-            if match:
-                posible_fecha = match.group(1).strip()
-                if posible_fecha:
-                    fecha_ultimo_cambio = posible_fecha  # Guarda el último válido encontrado
+    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
+    
+    for match in coincidencias:
+        posible_valor = match.group(1).strip()
+        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
+            fecha_ultimo_cambio = posible_valor  # Guarda el último válido encontrado
     
     # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
