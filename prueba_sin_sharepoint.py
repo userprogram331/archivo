@@ -413,11 +413,39 @@ def generar_pdf(datos_sat, idcif, rfc):
     else:
         if situacion_contribuyente == "SUSPENDIDO":
             regimen = None
-
-        # Régimen Fiscal en la segunda página
+        # Ajustes
+        x_inicio = 78
+        y_linea1 = 628
+        y_linea2 = 623
+        x_maximo = 370
+        
+        # Fuente y tamaño deben coincidir con drawString
         c.setFont("Helvetica", 8)
-        c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(78, 628, safe_text(regimen))
+        
+        # Medimos el ancho del texto en puntos
+        texto = safe_text(regimen)
+        ancho_texto = c.stringWidth(texto, "Helvetica", 8)
+        
+        if ancho_texto + x_inicio > x_maximo:
+            # Si se pasa, partimos el texto en dos líneas
+        
+            # Partimos manualmente en una posición aproximada
+            # Aquí tomamos una cantidad de caracteres que "más o menos" caben (ajustable)
+            max_chars = 90  # Puedes ajustar esto fino si tu fuente cambia
+        
+            linea1 = texto[:max_chars]
+            linea2 = texto[max_chars:]
+        
+            c.drawString(x_inicio, y_linea1, linea1)
+            c.drawString(x_inicio, y_linea2, linea2)
+        else:
+            # Si cabe en una sola línea, lo dibujamos normal
+            c.drawString(x_inicio, y_linea1, texto)
+    
+        # Régimen Fiscal en la segunda página
+        #c.setFont("Helvetica", 8)
+        #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
+        #c.drawString(78, 628, safe_text(regimen))
 
         # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
