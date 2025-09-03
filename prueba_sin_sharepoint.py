@@ -294,8 +294,10 @@ def generar_pdf(datos_sat, idcif, rfc):
     #dibujar_texto(formatear_fecha(resultado_fecha_actual), 490, 631)
 
     # Área del campo resultado_fecha_actual
-    x1 = 308
-    x2 = 578
+    x1 = 305
+    x2 = 580
+    #x1 = 308
+    #x2 = 578
     max_width = x2 - x1
     
     # Texto seguro y formateado
@@ -311,8 +313,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         # Cabe con tamaño 10, centrar en y = 580
         line_width = text_width
         x = (x1 + x2 - line_width) / 2
-        y = 590
-        #y = 580
+        y = 580
         c.setFillColorRGB(0.0, 0.0, 0.0)
         c.drawString(x, y, resultado_fecha_actual)
     else:
@@ -745,8 +746,7 @@ def generar_pdf_morales(datos_sat, idcif, rfc):
         # Cabe con tamaño 10, centrar en y = 580
         line_width = text_width
         x = (x1 + x2 - line_width) / 2
-        y = 590
-        #y = 580
+        y = 580
         c.setFillColorRGB(0.0, 0.0, 0.0)
         c.drawString(x, y, resultado_fecha_actual)
     else:
