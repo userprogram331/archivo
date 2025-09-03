@@ -342,11 +342,11 @@ def generar_pdf(datos_sat, idcif, rfc):
     if regimen2 == None:
         if situacion_contribuyente == "SUSPENDIDO":
             regimen = None
-        regimen = "222222222222222222222222222222222222222222222222222222222222222222222222222222222"
+        
      # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
         c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(33, 555, safe_text(regimen))
+        c.drawString(33, 555, safe_text("2222222222222222222222222222222222222222222222222222222222222"))
     
          # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
