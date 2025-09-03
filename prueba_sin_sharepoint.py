@@ -1143,7 +1143,13 @@ def ordenar_datos(texto,datos_extraidos):
             if patron_fecha.fullmatch(posible_fecha):
                 fecha_ultimo_cambio = posible_fecha
                 break
-    
+    if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
+    try:
+        fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
+        fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
+    except Exception as e:
+        print("Error al calcular fecha_ultimo_cambio:", e)
+    resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
 
 
     entidad_federativa = None
