@@ -1138,7 +1138,8 @@ def ordenar_datos(texto):
         posible_valor = match.group(1).strip()
         if posible_valor and not any(c in posible_valor for c in [':', '\n']):
             fecha_ultimo_cambio = posible_valor
-            break
+            # NO romper aquí, seguir buscando para asegurar el último no vacío
+    
     # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
         try:
@@ -1146,7 +1147,9 @@ def ordenar_datos(texto):
             fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
         except Exception as e:
             print("Error al calcular fecha_ultimo_cambio:", e)
+    
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
+    
 
 
     entidad_federativa = None
