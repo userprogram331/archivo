@@ -294,10 +294,9 @@ def generar_pdf(datos_sat, idcif, rfc):
     #dibujar_texto(formatear_fecha(resultado_fecha_actual), 490, 631)
 
     # Área del campo resultado_fecha_actual
-    x1 = 300
-    x2 = 585
-    #x1 = 308
-    #x2 = 578
+       
+    x1 = 308
+    x2 = 578
     max_width = x2 - x1
     
     # Texto seguro y formateado
