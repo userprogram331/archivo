@@ -1156,6 +1156,7 @@ def ordenar_datos(texto):
             break
     resultado['Situación del contribuyente'] = situacion_contribuyente
 
+    fecha_ultimo_cambio = None
     for clave, valor in data.items():
         if "Fecha del último cambio de situación" in clave:
             match = re.search(r'Fecha del último cambio de situación[:\s]*([\d\-\/]{10})', clave)
