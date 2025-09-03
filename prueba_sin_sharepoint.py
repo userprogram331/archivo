@@ -1149,32 +1149,6 @@ def ordenar_datos(texto):
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
 
 
-
-    
-    # Revisar si la fecha está directamente como clave
-    for clave, valor in datos_extraidos.items():
-        if "Fecha del último cambio de situación" in clave:
-            # Buscar la fecha con regex dentro de la clave
-            match = re.search(r'Fecha del último cambio de situación[:\s]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', clave)
-            if match:
-                fecha_ultimo_cambio = match.group(1)
-                break
-        elif "Fecha del último cambio de situación" in valor:
-            # La fecha puede estar en la clave, si el valor es la etiqueta
-            if re.match(r'^\d{2}[-/]\d{2}[-/]\d{4}$', clave.strip()):
-                fecha_ultimo_cambio = clave.strip()
-                break
-    
-    # Si no se encontró, usar la fecha de nacimiento
-    if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
-        try:
-            fecha_nac = datetime.strptime(fecha_nacimiento, "%d-%m-%Y") if '-' in fecha_nacimiento else datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
-            fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
-        except Exception as e:
-            print("Error al calcular fecha_ultimo_cambio:", e)
-    
-    resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
-
     entidad_federativa = None
     coincidencias = list(re.finditer(r'Entidad Federativa:\s*(.{1,50}?)\s*(Municipio o delegación:|$)', limpio))
     for match in coincidencias:
