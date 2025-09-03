@@ -1157,27 +1157,25 @@ def ordenar_datos(texto):
     resultado['Situación del contribuyente'] = situacion_contribuyente
 
     fecha_ultimo_cambio = None
-    for clave, valor in data.items():
-        if "Fecha del último cambio de situación" in clave:
-            match = re.search(r'Fecha del último cambio de situación[:\s]*([\d\-\/]{10})', clave)
-            if match:
-                fecha_ultimo_cambio = match.group(1)
-                break
-        elif "Fecha del último cambio de situación" in valor:
-            # Evitar valores vacíos
-            if clave.strip() and re.match(r'^\d{2}[-/]\d{2}[-/]\d{4}$', clave.strip()):
-                fecha_ultimo_cambio = clave.strip()
-                break
     
-    # Si no hay fecha, calcularla usando fecha_nacimiento + 18 años + 2 meses
+    # Regex actualizada: busca la fecha con formato dd-mm-yyyy o dd/mm/yyyy después del texto clave
+    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', limpio))
+    
+    for match in coincidencias:
+        posible_valor = match.group(1).strip()
+        if posible_valor:
+            fecha_ultimo_cambio = posible_valor
+            break
+    
+    # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
         try:
-            fecha_nac = datetime.strptime(fecha_nacimiento, "%d-%m-%Y")
+            # Acepta fechas con guiones o slashes
+            fecha_nac = datetime.strptime(fecha_nacimiento, "%d-%m-%Y") if '-' in fecha_nacimiento else datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
             fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
         except Exception as e:
             print("Error al calcular fecha_ultimo_cambio:", e)
     
-    # Guardar resultado
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
 
     entidad_federativa = None
