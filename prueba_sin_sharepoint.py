@@ -1077,7 +1077,7 @@ def extraer_regimenes_de_datos_morales(texto):
     return regimen1, fecha1, regimen2, fecha2
 ############################################ FIN CONSULTA SAT MORALES #######################################################################
 ########################################### ORDENAR DATOS FISCALES ######################################################################
-def ordenar_datos(texto):
+def ordenar_datos(texto,datos_extraidos):
     limpio = texto  # Puedes limpiar el texto aquí si quieres
     resultado = {}
 
@@ -1133,23 +1133,16 @@ def ordenar_datos(texto):
 
     # Fecha del último cambio de situación
     fecha_ultimo_cambio = None
-    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
     
-    for match in coincidencias:
-        posible_valor = match.group(1).strip()
-        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
-            fecha_ultimo_cambio = posible_valor  # Guarda el último válido encontrado
+    patron_fecha = re.compile(r"(\d{4}-\d{2}-\d{2})|(\d{2}-\d{2}-\d{4})")
     
-    # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
-    if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
-        try:
-            fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
-            fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
-        except Exception as e:
-            print("Error al calcular fecha_ultimo_cambio:", e)
-    
-    resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
-
+    for clave in datos_extraidos.keys():
+        if isinstance(clave, str) and "Fecha del último cambio de situación:" in clave:
+            inicio = clave.find("Fecha del último cambio de situación:") + len("Fecha del último cambio de situación:")
+            posible_fecha = clave[inicio:inicio + 10].strip()
+            if patron_fecha.fullmatch(posible_fecha):
+                fecha_ultimo_cambio = posible_fecha
+                break
     
 
 
