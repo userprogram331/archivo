@@ -66,8 +66,8 @@ def generar_pdf(datos_sat, idcif, rfc):
         fecha_alta2 = None
     
     st.write("Estatus:", fecha_ultimo_cambio)
-    #st.write("Estatus:", fecha_alta)
-    #st.write("Estatus:", regimen2)
+    st.write("Estatus:", datos)
+    st.write("Estatus:", datos_sat)
     #st.write("Estatus:", fecha_alta2)
     
     #st.write("Estatus:", "Generado")
