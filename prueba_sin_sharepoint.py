@@ -56,7 +56,8 @@ def generar_pdf(datos_sat, idcif, rfc):
     numero_exterior = datos.get("número_exterior", "")
     colonia = datos.get("colonia", "")
     resultado_fecha_actual = datos.get("fecha_actual", "")
-    regimen = datos.get("régimen", "")
+    #regimen = datos.get("régimen", "")
+    regien = "2222222222222222222222222222222222222222222222222222222222222222222222222"
     fecha_alta = datos.get("fecha_de_alta", "")
     regimen2 = datos.get("régimen2", "")
     fecha_alta2 = datos.get("fecha_de_alta2", "")
@@ -65,8 +66,8 @@ def generar_pdf(datos_sat, idcif, rfc):
         regimen2 = None
         fecha_alta2 = None
     
-    st.write("Estatus:", datos)
-    st.write("Estatus:", datos_sat)
+    #st.write("Estatus:", datos)
+    #st.write("Estatus:", datos_sat)
     #st.write("Estatus:", regimen2)
     #st.write("Estatus:", fecha_alta2)
     
@@ -346,7 +347,7 @@ def generar_pdf(datos_sat, idcif, rfc):
      # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
         c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(33, 555, safe_text("2222222222222222222222222222222222222222222222222222222222222"))
+        c.drawString(33, 555, safe_text(regimen))
     
          # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
