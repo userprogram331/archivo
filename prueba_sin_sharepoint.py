@@ -416,7 +416,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
         c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(78, 628, safe_text(regimen))
+        c.drawString(78, 628, safe_text(regimen,"11111111111111111111111111111111111111111111111111111"))
 
         # Régimen Fiscal en la segunda página
         c.setFont("Helvetica", 8)
