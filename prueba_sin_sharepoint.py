@@ -1133,33 +1133,24 @@ def ordenar_datos(texto):
 
     # Fecha del último cambio de situación
     fecha_ultimo_cambio = None
-
-    for clave, valor in datos_extraidos.items():
-        if "Fecha del último cambio de situación" in clave:
-            match = re.search(r'Fecha del último cambio de situación[:\s]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', clave)
-            if match:
-                fecha_ultimo_cambio = match.group(1).strip()
-                break
-        elif "Fecha del último cambio de situación" in valor:
-            if re.match(r'^\d{2}[-/]\d{2}[-/]\d{4}$', clave.strip()):
-                fecha_ultimo_cambio = clave.strip()
-                break
-
+    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.+?)\s*(?:[A-Z][a-zA-Z ]+?:|$)', limpio))
+    for match in coincidencias:
+        posible_valor = match.group(1).strip()
+        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
+            fecha_ultimo_cambio = posible_valor
+            break
     # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
         try:
-            # Probamos con guiones o con barras para cubrir ambos formatos
-            try:
-                fecha_nac_dt = datetime.strptime(fecha_nacimiento, "%d-%m-%Y")
-            except:
-                fecha_nac_dt = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
-
-            fecha_ultimo_cambio = (fecha_nac_dt + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
+            fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
+            fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
         except Exception as e:
             print("Error al calcular fecha_ultimo_cambio:", e)
-
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
 
+
+
+    
     # Revisar si la fecha está directamente como clave
     for clave, valor in datos_extraidos.items():
         if "Fecha del último cambio de situación" in clave:
