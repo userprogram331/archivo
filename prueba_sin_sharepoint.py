@@ -1156,7 +1156,7 @@ def ordenar_datos(texto):
             break
     resultado['Situación del contribuyente'] = situacion_contribuyente
 
-   fecha_ultimo_cambio = None
+    fecha_ultimo_cambio = None
 
     # Nueva expresión regular: busca fecha real después de la etiqueta
     coincidencias = list(re.finditer(
