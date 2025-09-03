@@ -1156,10 +1156,13 @@ def ordenar_datos(texto):
             break
     resultado['Situación del contribuyente'] = situacion_contribuyente
 
-    fecha_ultimo_cambio = None
-    
-    # Regex actualizada: busca la fecha con formato dd-mm-yyyy o dd/mm/yyyy después del texto clave
-    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', limpio))
+   fecha_ultimo_cambio = None
+
+    # Nueva expresión regular: busca fecha real después de la etiqueta
+    coincidencias = list(re.finditer(
+        r'Fecha del último cambio de situación:\s*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})',
+        limpio
+    ))
     
     for match in coincidencias:
         posible_valor = match.group(1).strip()
@@ -1170,7 +1173,7 @@ def ordenar_datos(texto):
     # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
         try:
-            # Acepta fechas con guiones o slashes
+            # Aceptar fechas con '-' o '/'
             fecha_nac = datetime.strptime(fecha_nacimiento, "%d-%m-%Y") if '-' in fecha_nacimiento else datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
             fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
         except Exception as e:
