@@ -1157,16 +1157,32 @@ def ordenar_datos(texto):
     resultado['Situación del contribuyente'] = situacion_contribuyente
 
     fecha_ultimo_cambio = None
-    fecha_ultimo_cambio = None
-    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
-    for match in coincidencias:
-        posible_valor = match.group(1).strip()
-        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
-            fecha_ultimo_cambio = posible_valor
-            break  # <- solo hace break si la fecha es válida (ya dentro del if)
-
+    
+    # Regex para detectar fecha en formato dd-mm-yyyy o dd/mm/yyyy
+    patron_fecha = re.compile(r"^\d{2}[-/]\d{2}[-/]\d{4}$")
+    
+    # Buscar todas las ocurrencias de "Fecha del último cambio de situación:"
+    inicio_busqueda = 0
+    while True:
+        idx = limpio.find("Fecha del último cambio de situación:", inicio_busqueda)
+        if idx == -1:
+            break  # Ya no hay más coincidencias
+    
+        # Avanzar hasta después de la etiqueta
+        idx_fecha = idx + len("Fecha del último cambio de situación:")
+        posible_fecha = limpio[idx_fecha:idx_fecha + 10].strip()
+    
+        # Validar formato
+        if patron_fecha.match(posible_fecha):
+            fecha_ultimo_cambio = posible_fecha
+            break  # ✅ Fecha válida encontrada, ya no seguimos buscando
+    
+        # Si no es fecha válida, seguir buscando después de esta posición
+        inicio_busqueda = idx_fecha
+    
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
-
+    
+   
     entidad_federativa = None
     coincidencias = list(re.finditer(r'Entidad Federativa:\s*(.{1,50}?)\s*(Municipio o delegación:|$)', limpio))
     for match in coincidencias:
