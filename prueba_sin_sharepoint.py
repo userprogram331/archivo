@@ -305,7 +305,7 @@ def generar_pdf(datos_sat, idcif, rfc):
     
     # Intentar con fuente tamaño 10
     font_name = "Helvetica-Bold"
-    font_size_try = 10
+    font_size_try = 9
     c.setFont(font_name, font_size_try)
     text_width = c.stringWidth(resultado_fecha_actual, font_name, font_size_try)
     
