@@ -1133,16 +1133,13 @@ def ordenar_datos(texto,datos_extraidos):
 
     # Fecha del último cambio de situación
     fecha_ultimo_cambio = None
+    coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
     
-    patron_fecha = re.compile(r"(\d{4}-\d{2}-\d{2})|(\d{2}-\d{2}-\d{4})")
-    
-    for clave in datos_extraidos.keys():
-        if isinstance(clave, str) and "Fecha del último cambio de situación:" in clave:
-            inicio = clave.find("Fecha del último cambio de situación:") + len("Fecha del último cambio de situación:")
-            posible_fecha = clave[inicio:inicio + 10].strip()
-            if patron_fecha.fullmatch(posible_fecha):
-                fecha_ultimo_cambio = posible_fecha
-                break
+    for match in coincidencias:
+        posible_valor = match.group(1).strip()
+        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
+            fecha_ultimo_cambio = posible_valor
+            break  # ← ¡Importante! Solo toma el primero válido y rompe el ciclo
     if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
         try:
             fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
