@@ -65,9 +65,9 @@ def generar_pdf(datos_sat, idcif, rfc):
         regimen2 = None
         fecha_alta2 = None
     
-    st.write("Estatus:", fecha_ultimo_cambio)
     st.write("Estatus:", datos)
     st.write("Estatus:", datos_sat)
+    #st.write("Estatus:", regimen2)
     #st.write("Estatus:", fecha_alta2)
     
     #st.write("Estatus:", "Generado")
@@ -1077,7 +1077,7 @@ def extraer_regimenes_de_datos_morales(texto):
     return regimen1, fecha1, regimen2, fecha2
 ############################################ FIN CONSULTA SAT MORALES #######################################################################
 ########################################### ORDENAR DATOS FISCALES ######################################################################
-def ordenar_datos(texto,datos_extraidos):
+def ordenar_datos(texto):
     limpio = texto  # Puedes limpiar el texto aquí si quieres
     resultado = {}
 
@@ -1131,7 +1131,31 @@ def ordenar_datos(texto,datos_extraidos):
             break
     resultado['Fecha Nacimiento'] = fecha_nacimiento
 
-    # Fecha del último cambio de situación
+    fecha_inicio_operaciones = None
+    coincidencias = list(re.finditer(r'Fecha de Inicio de operaciones:\s*(.{1,50}?)\s*(Situación del contribuyente:|$)', limpio))
+    for match in coincidencias:
+        posible_valor = match.group(1).strip()
+        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
+            fecha_inicio_operaciones = posible_valor
+            break
+    # Si no hay fecha de inicio, usar fecha nacimiento + 18 años
+    if (not fecha_inicio_operaciones or fecha_inicio_operaciones == '') and fecha_nacimiento:
+        try:
+            fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")  # Ajustar formato si es otro
+            fecha_inicio_operaciones = fecha_nac.replace(year=fecha_nac.year + 18).strftime("%d/%m/%Y")
+        except Exception as e:
+            print("Error al convertir fecha de nacimiento:", e)
+    resultado['Fecha de Inicio de operaciones'] = fecha_inicio_operaciones
+
+    situacion_contribuyente = None
+    coincidencias = list(re.finditer(r'Situación del contribuyente:\s*(.{1,50}?)\s*(Fecha del último cambio de situación:|$)', limpio))
+    for match in coincidencias:
+        posible_valor = match.group(1).strip()
+        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
+            situacion_contribuyente = posible_valor
+            break
+    resultado['Situación del contribuyente'] = situacion_contribuyente
+
     fecha_ultimo_cambio = None
     coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
     for match in coincidencias:
@@ -1147,8 +1171,6 @@ def ordenar_datos(texto,datos_extraidos):
         except Exception as e:
             print("Error al calcular fecha_ultimo_cambio:", e)
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
-    
-
 
     entidad_federativa = None
     coincidencias = list(re.finditer(r'Entidad Federativa:\s*(.{1,50}?)\s*(Municipio o delegación:|$)', limpio))
