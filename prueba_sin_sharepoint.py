@@ -1157,19 +1157,14 @@ def ordenar_datos(texto):
     resultado['Situación del contribuyente'] = situacion_contribuyente
 
     fecha_ultimo_cambio = None
+    fecha_ultimo_cambio = None
     coincidencias = list(re.finditer(r'Fecha del último cambio de situación:\s*(.{1,50}?)\s*(CURP:|$)', limpio))
     for match in coincidencias:
         posible_valor = match.group(1).strip()
         if posible_valor and not any(c in posible_valor for c in [':', '\n']):
             fecha_ultimo_cambio = posible_valor
-            break
-    # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
-    #if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
-       # try:
-           # fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
-           # fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
-      #  except Exception as e:
-           # print("Error al calcular fecha_ultimo_cambio:", e)
+            break  # <- solo hace break si la fecha es válida (ya dentro del if)
+
     resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
 
     entidad_federativa = None
