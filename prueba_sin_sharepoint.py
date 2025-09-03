@@ -57,7 +57,7 @@ def generar_pdf(datos_sat, idcif, rfc):
     colonia = datos.get("colonia", "")
     resultado_fecha_actual = datos.get("fecha_actual", "")
     #regimen = datos.get("régimen", "")
-    regien = "2222222222222222222222222222222222222222222222222222222222222222222222222"
+    regimen = "2222222222222222222222222222222222222222222222222222222222222222222222222"
     fecha_alta = datos.get("fecha_de_alta", "")
     regimen2 = datos.get("régimen2", "")
     fecha_alta2 = datos.get("fecha_de_alta2", "")
