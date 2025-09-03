@@ -1,0 +1,14 @@
+streamlit
+qrcode[pil]
+pillow
+reportlab
+oauth2client
+streamlit
+gspread
+pandas
+requests
+beautifulsoup4
+reportlab
+PyPDF2
+qrcode
+pdfrw
