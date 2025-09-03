@@ -311,7 +311,8 @@ def generar_pdf(datos_sat, idcif, rfc):
         # Cabe con tamaño 10, centrar en y = 580
         line_width = text_width
         x = (x1 + x2 - line_width) / 2
-        y = 580
+        y = 590
+        #y = 580
         c.setFillColorRGB(0.0, 0.0, 0.0)
         c.drawString(x, y, resultado_fecha_actual)
     else:
