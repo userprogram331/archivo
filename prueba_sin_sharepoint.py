@@ -1131,33 +1131,32 @@ def ordenar_datos(texto):
             break
     resultado['Fecha Nacimiento'] = fecha_nacimiento
 
-    fecha_inicio_operaciones = None
-    coincidencias = list(re.finditer(r'Fecha de Inicio de operaciones:\s*(.{1,50}?)\s*(Situación del contribuyente:|$)', limpio))
-    for match in coincidencias:
-        posible_valor = match.group(1).strip()
-        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
-            fecha_inicio_operaciones = posible_valor
-            break
-    # Si no hay fecha de inicio, usar fecha nacimiento + 18 años
-    if (not fecha_inicio_operaciones or fecha_inicio_operaciones == '') and fecha_nacimiento:
-        try:
-            fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")  # Ajustar formato si es otro
-            fecha_inicio_operaciones = fecha_nac.replace(year=fecha_nac.year + 18).strftime("%d/%m/%Y")
-        except Exception as e:
-            print("Error al convertir fecha de nacimiento:", e)
-    resultado['Fecha de Inicio de operaciones'] = fecha_inicio_operaciones
-
-    situacion_contribuyente = None
-    coincidencias = list(re.finditer(r'Situación del contribuyente:\s*(.{1,50}?)\s*(Fecha del último cambio de situación:|$)', limpio))
-    for match in coincidencias:
-        posible_valor = match.group(1).strip()
-        if posible_valor and not any(c in posible_valor for c in [':', '\n']):
-            situacion_contribuyente = posible_valor
-            break
-    resultado['Situación del contribuyente'] = situacion_contribuyente
-
     fecha_ultimo_cambio = None
     
+    # Buscar directamente en el diccionario, ya que el regex sobre `limpio` no sirve aquí
+    for clave, valor in datos_extraidos.items():
+        if "Fecha del último cambio de situación" in clave:
+            # Buscar fecha en la clave (ej: "Fecha del último cambio de situación:31-01-2005")
+            match = re.search(r'Fecha del último cambio de situación[:\s]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', clave)
+            if match:
+                fecha_ultimo_cambio = match.group(1).strip()
+                break
+        elif "Fecha del último cambio de situación" in valor:
+            # A veces el valor es la etiqueta y la clave es la fecha
+            if re.match(r'^\d{2}[-/]\d{2}[-/]\d{4}$', clave.strip()):
+                fecha_ultimo_cambio = clave.strip()
+                break
+    
+    # Si no hay fecha último cambio, calcular fecha_nacimiento + 18 años + 2 meses
+    if (not fecha_ultimo_cambio or fecha_ultimo_cambio == '') and fecha_nacimiento:
+        try:
+            fecha_nac = datetime.strptime(fecha_nacimiento, "%d/%m/%Y")
+            fecha_ultimo_cambio = (fecha_nac + relativedelta(years=18, months=2)).strftime("%d/%m/%Y")
+        except Exception as e:
+            print("Error al calcular fecha_ultimo_cambio:", e)
+    
+    resultado['Fecha del último cambio de situación'] = fecha_ultimo_cambio
+
     # Revisar si la fecha está directamente como clave
     for clave, valor in datos_extraidos.items():
         if "Fecha del último cambio de situación" in clave:
