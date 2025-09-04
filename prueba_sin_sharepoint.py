@@ -351,7 +351,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 33
         y_inicio = 555
-        ancho_maximo = 445 - x_inicio
+        ancho_maximo = 442 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -381,7 +381,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 78
         y_inicio = 628
-        ancho_maximo = 370 - x_inicio
+        ancho_maximo = 367 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -470,7 +470,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 78
         y_inicio = 628
-        ancho_maximo = 370 - x_inicio
+        ancho_maximo = 367 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -502,7 +502,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 78
         y_inicio = 605
-        ancho_maximo = 370 - x_inicio
+        ancho_maximo = 367 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -531,7 +531,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 33
         y_inicio = 535
-        ancho_maximo = 445 - x_inicio
+        ancho_maximo = 442 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -561,7 +561,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 33
         y_inicio = 512
-        ancho_maximo = 445 - x_inicio
+        ancho_maximo = 442 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
