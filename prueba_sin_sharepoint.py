@@ -46,7 +46,7 @@ def generar_pdf(datos_sat, idcif, rfc):
     apellido_materno = datos.get("apellido_materno", "")
     fecha_inicio_operaciones = datos.get("fecha_de_inicio_de_operaciones", "")
     situacion_contribuyente = datos.get("situación_del_contribuyente", "")
-    fecha_ultimo_cambio = datos.get("fecha_del_ultimo_cambio_de_situacion", "")
+    fecha_ultimo_cambio = datos.get("fecha_del_último_cambio_de_situación", "")
     cp = datos.get("cp", "")
     nombre_vialidad = datos.get("nombre_de_la_vialidad", "")
     numero_interior = datos.get("número_interior", "")
