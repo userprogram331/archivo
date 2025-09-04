@@ -56,11 +56,9 @@ def generar_pdf(datos_sat, idcif, rfc):
     numero_exterior = datos.get("número_exterior", "")
     colonia = datos.get("colonia", "")
     resultado_fecha_actual = datos.get("fecha_actual", "")
-    #regimen = datos.get("régimen", "")
-    regimen = "22222222 222222222222222 2222222222222 222222222222 22222222222222 22222222222 22222222 222222222 222222222222 22222222222 2222222222"
-    regimen2 = "3333333 3333333333 33333333333 33333333333 333333333333 3333333333333 333333333333 333333333333 3333333333333 333333333333 333333333"
+    regimen = datos.get("régimen", "")
     fecha_alta = datos.get("fecha_de_alta", "")
-    #regimen2 = datos.get("régimen2", "")
+    regimen2 = datos.get("régimen2", "")
     fecha_alta2 = datos.get("fecha_de_alta2", "")
     rfc = rfc.upper()
     if regimen2 and regimen in regimen2:
@@ -351,7 +349,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 33
         y_inicio = 555
-        ancho_maximo = 442 - x_inicio
+        ancho_maximo = 435 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -531,7 +529,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 33
         y_inicio = 535
-        ancho_maximo = 442 - x_inicio
+        ancho_maximo = 435 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
@@ -561,7 +559,7 @@ def generar_pdf(datos_sat, idcif, rfc):
         color = (0, 0, 0)
         x_inicio = 33
         y_inicio = 512
-        ancho_maximo = 442 - x_inicio
+        ancho_maximo = 435 - x_inicio
         line_spacing = size + 2
         
         c.setFont(font, size)
