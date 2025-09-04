@@ -413,7 +413,7 @@ def generar_pdf(datos_sat, idcif, rfc):
     else:
         if situacion_contribuyente == "SUSPENDIDO":
             regimen = None
-        
+
         regimen = safe_text(regimen)
         font = "Helvetica"
         size = 8
@@ -435,10 +435,9 @@ def generar_pdf(datos_sat, idcif, rfc):
         lines = textwrap.wrap(regimen, width=chars_per_line)[:2]
         
         for i, line in enumerate(lines):
-            line_width = c.stringWidth(line, font, size)
-            x = x_inicio + (ancho_maximo - line_width) / 2
             y = y_inicio - (i * line_spacing)
-            c.drawString(x, y, line)
+            c.drawString(x_inicio, y, line)
+
         
             
         # Régimen Fiscal en la segunda página
