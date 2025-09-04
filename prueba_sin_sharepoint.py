@@ -413,35 +413,34 @@ def generar_pdf(datos_sat, idcif, rfc):
     else:
         if situacion_contribuyente == "SUSPENDIDO":
             regimen = None
-        # Ajustes
-        x_inicio = 78
-        y_linea1 = 628
-        y_linea2 = 623
-        x_maximo = 370
         
-        # Fuente y tamaño deben coincidir con drawString
-        c.setFont("Helvetica", 8)
+        regimen = safe_text(regimen)
+        font = "Helvetica"
+        size = 8
+        color = (0, 0, 0)
+        x_inicio = 33
+        y_inicio = 555
+        ancho_maximo = 370 - x_inicio
+        line_spacing = size + 2
         
-        # Medimos el ancho del texto en puntos
-        texto = safe_text(regimen)
-        ancho_texto = c.stringWidth(texto, "Helvetica", 8)
+        c.setFont(font, size)
+        c.setFillColorRGB(*color)
         
-        if ancho_texto + x_inicio > x_maximo:
-            # Si se pasa, partimos el texto en dos líneas
+        text_width = c.stringWidth(regimen, font, size)
+        avg_char_width = text_width / max(len(regimen), 1)
+        if avg_char_width == 0:
+            avg_char_width = 1
         
-            # Partimos manualmente en una posición aproximada
-            # Aquí tomamos una cantidad de caracteres que "más o menos" caben (ajustable)
-            max_chars = 90  # Puedes ajustar esto fino si tu fuente cambia
+        chars_per_line = int(ancho_maximo / avg_char_width)
+        lines = textwrap.wrap(regimen, width=chars_per_line)[:2]
         
-            linea1 = texto[:max_chars]
-            linea2 = texto[max_chars:]
+        for i, line in enumerate(lines):
+            line_width = c.stringWidth(line, font, size)
+            x = x_inicio + (ancho_maximo - line_width) / 2
+            y = y_inicio - (i * line_spacing)
+            c.drawString(x, y, line)
         
-            c.drawString(x_inicio, y_linea1, linea1)
-            c.drawString(x_inicio, y_linea2, linea2)
-        else:
-            # Si cabe en una sola línea, lo dibujamos normal
-            c.drawString(x_inicio, y_linea1, texto)
-    
+            
         # Régimen Fiscal en la segunda página
         #c.setFont("Helvetica", 8)
         #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
