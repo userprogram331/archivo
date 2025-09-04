@@ -57,7 +57,7 @@ def generar_pdf(datos_sat, idcif, rfc):
     colonia = datos.get("colonia", "")
     resultado_fecha_actual = datos.get("fecha_actual", "")
     #regimen = datos.get("régimen", "")
-    regimen = "2222222222222222222222222222222222222222222222222222222222222222222222222"
+    regimen = "22222222 222222222222222 2222222222222 222222222222 22222222222222 22222222222"
     fecha_alta = datos.get("fecha_de_alta", "")
     regimen2 = datos.get("régimen2", "")
     fecha_alta2 = datos.get("fecha_de_alta2", "")
@@ -418,8 +418,8 @@ def generar_pdf(datos_sat, idcif, rfc):
         font = "Helvetica"
         size = 8
         color = (0, 0, 0)
-        x_inicio = 33
-        y_inicio = 555
+        x_inicio = 78
+        y_inicio = 628
         ancho_maximo = 370 - x_inicio
         line_spacing = size + 2
         
