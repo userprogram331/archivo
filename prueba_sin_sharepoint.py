@@ -343,16 +343,65 @@ def generar_pdf(datos_sat, idcif, rfc):
     if regimen2 == None:
         if situacion_contribuyente == "SUSPENDIDO":
             regimen = None
+
+        regimen = safe_text(regimen)
+        font = "Helvetica"
+        size = 8
+        color = (0, 0, 0)
+        x_inicio = 33
+        y_inicio = 555
+        ancho_maximo = 370 - x_inicio
+        line_spacing = size + 2
+        
+        c.setFont(font, size)
+        c.setFillColorRGB(*color)
+        
+        text_width = c.stringWidth(regimen, font, size)
+        avg_char_width = text_width / max(len(regimen), 1)
+        if avg_char_width == 0:
+            avg_char_width = 1
+        
+        chars_per_line = int(ancho_maximo / avg_char_width)
+        lines = textwrap.wrap(regimen, width=chars_per_line)[:2]
+        
+        for i, line in enumerate(lines):
+            y = y_inicio - (i * line_spacing)
+            c.drawString(x_inicio, y, line)
+
         
      # Régimen Fiscal en la segunda página
-        c.setFont("Helvetica", 8)
-        c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(33, 555, safe_text(regimen))
-    
+        #c.setFont("Helvetica", 8)
+        #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
+        #c.drawString(33, 555, safe_text(regimen))
+
+        regimen = safe_text(regimen)
+        font = "Helvetica"
+        size = 8
+        color = (0, 0, 0)
+        x_inicio = 78
+        y_inicio = 628
+        ancho_maximo = 445 - x_inicio
+        line_spacing = size + 2
+        
+        c.setFont(font, size)
+        c.setFillColorRGB(*color)
+        
+        text_width = c.stringWidth(regimen, font, size)
+        avg_char_width = text_width / max(len(regimen), 1)
+        if avg_char_width == 0:
+            avg_char_width = 1
+        
+        chars_per_line = int(ancho_maximo / avg_char_width)
+        lines = textwrap.wrap(regimen, width=chars_per_line)[:2]
+        
+        for i, line in enumerate(lines):
+            y = y_inicio - (i * line_spacing)
+            c.drawString(x_inicio, y, line)
+        
          # Régimen Fiscal en la segunda página
-        c.setFont("Helvetica", 8)
-        c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(78, 628, safe_text(regimen))
+        #c.setFont("Helvetica", 8)
+        #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
+        #c.drawString(78, 628, safe_text(regimen))
     
     
      # Régimen Fiscal fecha inicio
@@ -445,20 +494,94 @@ def generar_pdf(datos_sat, idcif, rfc):
         #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
         #c.drawString(78, 628, safe_text(regimen))
 
+
+        regimen2 = safe_text(regimen2)
+        font = "Helvetica"
+        size = 8
+        color = (0, 0, 0)
+        x_inicio = 78
+        y_inicio = 605
+        ancho_maximo = 370 - x_inicio
+        line_spacing = size + 2
+        
+        c.setFont(font, size)
+        c.setFillColorRGB(*color)
+        
+        text_width = c.stringWidth(regimen2, font, size)
+        avg_char_width = text_width / max(len(regimen2), 1)
+        if avg_char_width == 0:
+            avg_char_width = 1
+        
+        chars_per_line = int(ancho_maximo / avg_char_width)
+        lines = textwrap.wrap(regimen2, width=chars_per_line)[:2]
+        
+        for i, line in enumerate(lines):
+            y = y_inicio - (i * line_spacing)
+            c.drawString(x_inicio, y, line)
+
         # Régimen Fiscal en la segunda página
-        c.setFont("Helvetica", 8)
-        c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(78, 605, safe_text(regimen2))
+        #c.setFont("Helvetica", 8)
+        #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
+        #c.drawString(78, 605, safe_text(regimen2))
+
+        regimen = safe_text(regimen)
+        font = "Helvetica"
+        size = 8
+        color = (0, 0, 0)
+        x_inicio = 33
+        y_inicio = 535
+        ancho_maximo = 445 - x_inicio
+        line_spacing = size + 2
+        
+        c.setFont(font, size)
+        c.setFillColorRGB(*color)
+        
+        text_width = c.stringWidth(regimen, font, size)
+        avg_char_width = text_width / max(len(regimen), 1)
+        if avg_char_width == 0:
+            avg_char_width = 1
+        
+        chars_per_line = int(ancho_maximo / avg_char_width)
+        lines = textwrap.wrap(regimen, width=chars_per_line)[:2]
+        
+        for i, line in enumerate(lines):
+            y = y_inicio - (i * line_spacing)
+            c.drawString(x_inicio, y, line)
 
         
      # Régimen Fiscal en la segunda página
-        c.setFont("Helvetica", 8)
-        c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(33, 535, safe_text(regimen))
+        #c.setFont("Helvetica", 8)
+        #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
+        #c.drawString(33, 535, safe_text(regimen))
 
-        c.setFont("Helvetica", 8)
-        c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
-        c.drawString(33, 512, safe_text(regimen2))
+        regimen2 = safe_text(regimen2)
+        font = "Helvetica"
+        size = 8
+        color = (0, 0, 0)
+        x_inicio = 33
+        y_inicio = 512
+        ancho_maximo = 445 - x_inicio
+        line_spacing = size + 2
+        
+        c.setFont(font, size)
+        c.setFillColorRGB(*color)
+        
+        text_width = c.stringWidth(regimen2, font, size)
+        avg_char_width = text_width / max(len(regimen2), 1)
+        if avg_char_width == 0:
+            avg_char_width = 1
+        
+        chars_per_line = int(ancho_maximo / avg_char_width)
+        lines = textwrap.wrap(regimen2, width=chars_per_line)[:2]
+        
+        for i, line in enumerate(lines):
+            y = y_inicio - (i * line_spacing)
+            c.drawString(x_inicio, y, line)
+        
+        
+        #c.setFont("Helvetica", 8)
+        #c.setFillColorRGB(0.0, 0.0, 0.0)  # Negro
+        #c.drawString(33, 512, safe_text(regimen2))
     
 
     
