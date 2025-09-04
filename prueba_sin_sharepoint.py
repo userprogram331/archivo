@@ -179,8 +179,8 @@ def generar_pdf(datos_sat, idcif, rfc):
     if not fecha_para_imprimir:  # Si es None o cadena vacía
         fecha_para_imprimir = fecha_inicio_operaciones
 
-# Usar la fecha ya validada
-dibujar_texto(formatear_fecha(fecha_para_imprimir), 236, 325)
+    # Usar la fecha ya validada
+    dibujar_texto(formatear_fecha(fecha_para_imprimir), 236, 325)
 
     dibujar_texto(cp, 95, 249)
     dibujar_texto(nombre_vialidad, 115, 227)
