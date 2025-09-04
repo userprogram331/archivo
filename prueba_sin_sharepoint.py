@@ -57,9 +57,10 @@ def generar_pdf(datos_sat, idcif, rfc):
     colonia = datos.get("colonia", "")
     resultado_fecha_actual = datos.get("fecha_actual", "")
     #regimen = datos.get("régimen", "")
-    regimen = "22222222 222222222222222 2222222222222 222222222222 22222222222222 22222222222"
+    regimen = "22222222 222222222222222 2222222222222 222222222222 22222222222222 22222222222 22222222 222222222 222222222222 22222222222 2222222222 222222222 222222222222 2222222222"
+    regimen2 = "22222222 222222222222222 2222222222222 222222222222 22222222222222 22222222222 22222222 222222222 222222222222 22222222222 2222222222 222222222 222222222222 2222222222"
     fecha_alta = datos.get("fecha_de_alta", "")
-    regimen2 = datos.get("régimen2", "")
+    #regimen2 = datos.get("régimen2", "")
     fecha_alta2 = datos.get("fecha_de_alta2", "")
     rfc = rfc.upper()
     if regimen2 and regimen in regimen2:
